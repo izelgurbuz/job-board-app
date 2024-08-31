@@ -1,20 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice";
+import { AppDispatch, RootState } from "../store";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, error } = useSelector((state: RootState) => state.auth);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("/api/auth/login", { email, password });
-      dispatch(login({ user: response.data.user, token: response.data.token }));
-    } catch (error) {
-      console.error("Error logging in", error);
-    }
+    dispatch(login({ email, password }));
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -32,6 +30,10 @@ const Login: React.FC = () => {
         placeholder="Password"
         required
       />
+      <button type="submit" disabled={loading}>
+        {loading ? "Logging in..." : "Login"}
+      </button>
+      {error && <p>{error}</p>}
     </form>
   );
 };
