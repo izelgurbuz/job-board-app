@@ -8,14 +8,13 @@ export const createJob = async (req, res) => {
   }
 
   const { title, description, company, location } = req.body;
-
+console.log(req.user)
   try {
     const job = new Job({
       title,
       description,
       company,
       location,
-      postedBy: req.user.id,
     });
 
     await job.save();
