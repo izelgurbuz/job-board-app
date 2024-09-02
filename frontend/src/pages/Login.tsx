@@ -32,7 +32,7 @@ const Login: React.FC = () => {
       <button type="submit" disabled={loading}>
         {loading ? "Logging in..." : "Login"}
       </button>
-      {error && <p>{error}</p>}
+      {error && <p>{error.msg}</p>}
     </form>
   );
 };
