@@ -9,11 +9,23 @@ import Home from "./pages/Home";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import JobList from "./pages/JobList";
 import Job from "./pages/Job";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
     errorElement: <NotFoundPage />,
   },
   {
