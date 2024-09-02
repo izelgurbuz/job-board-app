@@ -5,7 +5,7 @@ interface AuthState {
   user: string | null;
   token: string | null;
   loading: boolean;
-  error: string | null;
+  error:  {msg : string | null} | null;
 }
 
 const initialState: AuthState = {
@@ -46,7 +46,7 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       state.token = null;
-      localStorage.removeItem('token'); 
+      localStorage.removeItem('access'); 
     },
   },
   extraReducers: (builder) => {
@@ -63,7 +63,7 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = {msg : action.payload as string};
       });
       builder
       .addCase(register.pending, (state) => {
@@ -78,7 +78,7 @@ const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = {msg: action.payload as string};
       });
   },
 });
